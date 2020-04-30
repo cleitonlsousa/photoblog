@@ -1,14 +1,23 @@
 package com.photoblog.api.response;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class PostResponse {
 
     private Integer id;
     private String title;
     private String body;
-    private AccountResponse createdBy;
-    private LocalDate createdDate;
+    private String createdBy;
+    private LocalDateTime createdDate;
+
+    public PostResponse(Integer id, String title, String body, String createdBy, LocalDateTime createdDate) {
+        this.id = id;
+        this.title = title;
+        this.body = body;
+        this.createdBy = createdBy;
+        this.createdDate = createdDate;
+    }
 
     public Integer getId() {
         return id;
@@ -34,19 +43,19 @@ public class PostResponse {
         this.body = body;
     }
 
-    public AccountResponse getCreatedBy() {
+    public String getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(AccountResponse createdBy) {
+    public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
     }
 
-    public LocalDate getCreatedDate() {
+    public LocalDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(LocalDate createdDate) {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 }

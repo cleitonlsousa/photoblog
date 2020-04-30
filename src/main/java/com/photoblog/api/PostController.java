@@ -1,13 +1,13 @@
 package com.photoblog.api;
 
 import com.photoblog.api.request.PostRequest;
+import com.photoblog.api.response.PostResponse;
 import com.photoblog.service.PostService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/post")
@@ -22,5 +22,10 @@ public class PostController {
     @PostMapping
     public void save(@RequestBody PostRequest postRequest, @AuthenticationPrincipal User user){
         postService.save(postRequest, user.getUsername());
+    }
+
+    @GetMapping
+    public List<PostResponse> getAll(){
+        return postService.getAll();
     }
 }
