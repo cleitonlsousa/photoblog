@@ -1,8 +1,12 @@
 package com.photoblog.api.request;
 
+import javax.validation.constraints.NotNull;
+
 public class PostRequest {
 
+    @NotNull(message = "title is required")
     private String title;
+    @NotNull(message = "body is required")
     private String body;
 
     public String getTitle() {

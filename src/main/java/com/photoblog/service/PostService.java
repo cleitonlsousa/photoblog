@@ -36,13 +36,17 @@ public class PostService {
         postRepository.save(new Post(
                 postRequest.getTitle(),
                 postRequest.getBody(),
-                accountService.getByEmail(userName),
+                accountService.findByEmail(userName),
                 LocalDate.now()
         ));
     }
 
     public List<PostResponse> getAll(){
         return postRepository.findAll().stream().map(this::getPostResponse).collect(Collectors.toList());
+    }
+
+    public PostResponse findById(Integer postId) {
+        return getPostResponse(getPost(postId));
     }
 
     public List<PostResponse> findBy(Map<String, String> params) {
@@ -104,25 +108,37 @@ public class PostService {
     }
 
     public void update(Integer postId, PostRequest postRequest, String userName) {
-        Post post = postRepository.findById(postId).orElseThrow(() -> new PostNotFoundException(postId));
+        Post post = getPost(postId);
 
-        if(post.getCreatedBy().getEmail().equals(userName)){
+        validateCreatedBY(userName, post);
 
-            if(!StringUtils.isEmpty(postRequest.getBody())){
-                post.setBody(postRequest.getBody());
-            }
-
-            if(!StringUtils.isEmpty(postRequest.getTitle())){
-                post.setTitle(postRequest.getTitle());
-            }
-
-            postRepository.save(post);
-
-        }else{
-
-            throw new UnauthorizedException();
-
+        if(!StringUtils.isEmpty(postRequest.getBody())){
+            post.setBody(postRequest.getBody());
         }
 
+        if(!StringUtils.isEmpty(postRequest.getTitle())){
+            post.setTitle(postRequest.getTitle());
+        }
+
+        postRepository.save(post);
+
+    }
+
+    public void delete(Integer postId, String userName) {
+        Post post = getPost(postId);
+
+        validateCreatedBY(userName,post);
+
+        postRepository.delete(post);
+
+    }
+
+    private void validateCreatedBY(String userName, Post post) {
+        if(!post.getCreatedBy().getEmail().equals(userName))
+            throw new UnauthorizedException();
+    }
+
+    private Post getPost(Integer postId) {
+        return postRepository.findById(postId).orElseThrow(() -> new PostNotFoundException(postId));
     }
 }

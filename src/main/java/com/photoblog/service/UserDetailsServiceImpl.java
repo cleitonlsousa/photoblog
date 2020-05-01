@@ -14,19 +14,17 @@ import java.util.ArrayList;
 @Component
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private AccountRepository accountRepository;
+    private AccountService accountService;
 
     @Autowired
-    public UserDetailsServiceImpl(AccountRepository accountRepository) {
-        this.accountRepository = accountRepository;
+    public UserDetailsServiceImpl(AccountService accountService) {
+        this.accountService = accountService;
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Account account = accountRepository.findByEmail(email);
-        if (account == null) {
-            throw new UsernameNotFoundException("User not found with email: " + email);
-        }
+        Account account = accountService.findByEmail(email);
+
         return new User(account.getEmail(), account.getSecret(), new ArrayList<>());
     }
 }

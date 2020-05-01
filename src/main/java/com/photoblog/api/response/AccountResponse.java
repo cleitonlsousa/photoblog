@@ -2,18 +2,14 @@ package com.photoblog.api.response;
 
 public class AccountResponse {
 
-    private Integer id;
     private String firstName;
     private String lastName;
     private String email;
 
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public AccountResponse(String firstName, String lastName, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
     }
 
     public String getFirstName() {

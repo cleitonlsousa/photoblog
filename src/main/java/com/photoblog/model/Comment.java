@@ -2,47 +2,35 @@ package com.photoblog.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
-public class Post {
+public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String title;
     private String body;
+
+    @Column(name = "created_date")
+    private LocalDate createdDate;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "created_by")
     private Account createdBy;
 
-    @Column(name = "created_date")
-    private LocalDate createdDate;
+    private Integer post;
 
-    public Post(){}
+    public Comment() {}
 
-    public Post(String title, String body, Account createdBy, LocalDate createdDate) {
-        this.title = title;
+    public Comment(String body, LocalDate createdDate, Account createdBy, Integer post) {
         this.body = body;
-        this.createdBy = createdBy;
         this.createdDate = createdDate;
+        this.createdBy = createdBy;
+        this.post = post;
     }
 
     public Integer getId() {
         return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getBody() {
@@ -53,14 +41,6 @@ public class Post {
         this.body = body;
     }
 
-    public Account getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(Account createdBy) {
-        this.createdBy = createdBy;
-    }
-
     public LocalDate getCreatedDate() {
         return createdDate;
     }
@@ -69,4 +49,19 @@ public class Post {
         this.createdDate = createdDate;
     }
 
+    public Account getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Account createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Integer getPost() {
+        return post;
+    }
+
+    public void setPost(Integer post) {
+        this.post = post;
+    }
 }

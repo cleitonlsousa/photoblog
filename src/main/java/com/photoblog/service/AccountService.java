@@ -1,6 +1,8 @@
 package com.photoblog.service;
 
 import com.photoblog.api.request.AccountRequest;
+import com.photoblog.api.response.AccountResponse;
+import com.photoblog.exception.AccountNFException;
 import com.photoblog.exception.EmailExistsException;
 import com.photoblog.model.Account;
 import com.photoblog.respository.AccountRepository;
@@ -22,8 +24,8 @@ public class AccountService {
         return this.accountRepository.existsByEmail(email);
     }
 
-    protected Account getByEmail(String email){
-        return accountRepository.findByEmail(email);
+    protected Account findByEmail(String email){
+        return accountRepository.findByEmail(email).orElseThrow(() -> new AccountNFException(email));
     }
 
     public void save(AccountRequest accountRequest){
@@ -39,4 +41,18 @@ public class AccountService {
         ));
     }
 
+    public AccountResponse getByEmail(String email){
+        Account account = findByEmail(email);
+
+        return new AccountResponse(account.getFirstName(), account.getLastName(), account.getEmail());
+    }
+
+    public void update(AccountRequest accountRequest, String email){
+        Account account = findByEmail(email);
+        account.setFirstName(accountRequest.getFirstName());
+        account.setLastName(accountRequest.getLastName());
+        account.setSecret(new BCryptPasswordEncoder().encode(accountRequest.getSecret()));
+
+        accountRepository.save(account);
+    }
 }

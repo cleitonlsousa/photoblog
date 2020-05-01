@@ -1,11 +1,14 @@
 package com.photoblog.api;
 
 import com.photoblog.api.request.AccountRequest;
+import com.photoblog.api.request.PostRequest;
+import com.photoblog.api.response.AccountResponse;
 import com.photoblog.service.AccountService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/account")
@@ -18,7 +21,17 @@ public class AccountController {
     }
 
     @PostMapping
-    public void save(@RequestBody AccountRequest accountRequest){
+    public void save(@Valid @RequestBody AccountRequest accountRequest){
         accountService.save(accountRequest);
+    }
+
+    @GetMapping
+    public AccountResponse getByEmail(@AuthenticationPrincipal User user){
+        return accountService.getByEmail(user.getUsername());
+    }
+
+    @PutMapping
+    public void update(@Valid @RequestBody AccountRequest accountRequest, @AuthenticationPrincipal User user){
+        accountService.update(accountRequest, user.getUsername());
     }
 }

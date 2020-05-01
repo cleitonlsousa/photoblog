@@ -1,7 +1,9 @@
 package com.photoblog.api.response;
 
+import com.photoblog.model.Comment;
+
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.List;
 
 public class PostResponse {
 
@@ -10,6 +12,7 @@ public class PostResponse {
     private String body;
     private String createdBy;
     private LocalDate createdDate;
+    private List<CommentResponse> comments;
 
     public PostResponse(Integer id, String title, String body, String createdBy, LocalDate createdDate) {
         this.id = id;
@@ -57,5 +60,13 @@ public class PostResponse {
 
     public void setCreatedDate(LocalDate createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public List<CommentResponse> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentResponse> comments) {
+        this.comments = comments;
     }
 }

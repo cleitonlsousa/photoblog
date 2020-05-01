@@ -1,10 +1,15 @@
 package com.photoblog.api.request;
 
+import javax.validation.constraints.NotNull;
+
 public class AccountRequest {
 
+    @NotNull(message = "firstName is required")
     private String firstName;
     private String lastName;
+    @NotNull(message = "email is required")
     private String email;
+    @NotNull(message = "secret is required")
     private String secret;
 
     public String getFirstName() {
