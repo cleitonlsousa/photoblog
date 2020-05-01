@@ -2,6 +2,7 @@ package com.photoblog.api;
 
 import com.photoblog.api.response.ImageResponse;
 import com.photoblog.service.ImageService;
+import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class ImageController {
 
     @PostMapping("/{albumId}")
     public void save(@PathVariable Integer albumId, @RequestParam("file") MultipartFile file,
-                     @AuthenticationPrincipal User user){
+                     @Parameter(hidden = true) @AuthenticationPrincipal User user){
 
         imageService.save(albumId, file, user.getUsername());
     }

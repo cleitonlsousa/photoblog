@@ -1,9 +1,9 @@
 package com.photoblog.api;
 
 import com.photoblog.api.request.AccountRequest;
-import com.photoblog.api.request.PostRequest;
 import com.photoblog.api.response.AccountResponse;
 import com.photoblog.service.AccountService;
+import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +31,7 @@ public class AccountController {
     }
 
     @PutMapping
-    public void update(@Valid @RequestBody AccountRequest accountRequest, @AuthenticationPrincipal User user){
+    public void update(@Valid @RequestBody AccountRequest accountRequest, @Parameter(hidden = true) @AuthenticationPrincipal User user){
         accountService.update(accountRequest, user.getUsername());
     }
 }

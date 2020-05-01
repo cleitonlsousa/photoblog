@@ -12,4 +12,5 @@ public interface ImageRepository extends JpaRepository<Image,Integer> {
 
         Optional<List<Image>> findByAlbum_Id(Integer album);
 
+
 }

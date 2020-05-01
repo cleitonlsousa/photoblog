@@ -3,6 +3,7 @@ package com.photoblog.api;
 import com.photoblog.api.request.PostRequest;
 import com.photoblog.api.response.PostResponse;
 import com.photoblog.service.PostService;
+import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
@@ -23,7 +24,7 @@ public class PostController {
     }
 
     @PostMapping
-    public void save(@Valid @RequestBody PostRequest postRequest, @AuthenticationPrincipal User user){
+    public void save(@Valid @RequestBody PostRequest postRequest,@Parameter(hidden = true) @AuthenticationPrincipal User user){
         postService.save(postRequest, user.getUsername());
     }
 
@@ -43,12 +44,12 @@ public class PostController {
     }
 
     @PutMapping("/{postId}")
-    public void update(@PathVariable Integer postId, @Valid @RequestBody PostRequest postRequest, @AuthenticationPrincipal User user){
+    public void update(@PathVariable Integer postId, @Valid @RequestBody PostRequest postRequest,@Parameter(hidden = true) @AuthenticationPrincipal User user){
         postService.update(postId, postRequest, user.getUsername());
     }
 
     @DeleteMapping("/{postId}")
-    public void delete(@PathVariable Integer postId, @AuthenticationPrincipal User user){
+    public void delete(@PathVariable Integer postId,@Parameter(hidden = true) @AuthenticationPrincipal User user){
         postService.delete(postId, user.getUsername());
     }
 }

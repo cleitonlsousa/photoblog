@@ -6,6 +6,8 @@ public class AccountResponse {
     private String lastName;
     private String email;
 
+    public AccountResponse() {}
+
     public AccountResponse(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;

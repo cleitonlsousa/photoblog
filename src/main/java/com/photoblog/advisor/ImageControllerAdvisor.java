@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
@@ -15,6 +16,7 @@ import java.util.Map;
 public class ImageControllerAdvisor extends BaseControllerAdvisor {
 
     @ExceptionHandler(ImageSaveException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<Object> photoSaveException(ImageSaveException ex) {
 
         Map<String, Object> body = new LinkedHashMap<>();
@@ -25,6 +27,7 @@ public class ImageControllerAdvisor extends BaseControllerAdvisor {
     }
 
     @ExceptionHandler(ImageNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<Object> imageNotFoundException(ImageNotFoundException ex) {
 
         Map<String, Object> body = new LinkedHashMap<>();

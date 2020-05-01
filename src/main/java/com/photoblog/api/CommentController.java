@@ -6,6 +6,7 @@ import com.photoblog.api.response.CommentResponse;
 import com.photoblog.api.response.PostResponse;
 import com.photoblog.service.CommentService;
 import com.photoblog.service.PostService;
+import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,7 @@ public class CommentController {
     }
 
     @PostMapping
-    public void save(@Valid @RequestBody CommentRequest commentRequest, @AuthenticationPrincipal User user){
+    public void save(@Valid @RequestBody CommentRequest commentRequest,@Parameter(hidden = true) @AuthenticationPrincipal User user){
         commentService.save(commentRequest, user.getUsername());
     }
 
@@ -41,12 +42,12 @@ public class CommentController {
     }
 
     @PutMapping("/{id}")
-    public void update(@PathVariable Integer id, @Valid @RequestBody CommentRequest commentRequest, @AuthenticationPrincipal User user){
+    public void update(@PathVariable Integer id, @Valid @RequestBody CommentRequest commentRequest,@Parameter(hidden = true) @AuthenticationPrincipal User user){
         commentService.update(id, commentRequest, user.getUsername());
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id, @AuthenticationPrincipal User user){
+    public void delete(@PathVariable Integer id,@Parameter(hidden = true) @AuthenticationPrincipal User user){
         commentService.delete(id, user.getUsername());
     }
 }
