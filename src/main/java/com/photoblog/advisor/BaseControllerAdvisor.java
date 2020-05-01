@@ -41,7 +41,7 @@ public class BaseControllerAdvisor extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(UnauthorizedException.class)
-    public ResponseEntity<Object> handleUserNotFoundException(UnauthorizedException ex) {
+    public ResponseEntity<Object> unauthorizedException(UnauthorizedException ex) {
 
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());

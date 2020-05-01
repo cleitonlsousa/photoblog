@@ -1,32 +1,26 @@
 package com.photoblog;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.UUID;
 
 //@SpringBootTest
 class PhotoblogApplicationTests {
 
 	@Test
-	void contextLoads() {
-		StringBuilder path = new StringBuilder().append(System.getProperty("user.home"));
-		path.append(File.separator);
-		path.append("photoblog");
-		path.append(File.separator);
-		path.append("album");
+	void contextLoads() throws IOException {
 
-		System.out.println(path);
+		String path = "C:\\Users\\Cleiton\\photoblog\\photo\\0720f334-7d66-4bb2-9a8b-b33900981db2\\1\\img03.jpg";
 
-		File file = new File(path.toString());
-		if(!file.exists()){
-			file.mkdirs();
-		}
+		InputStream in = getClass().getResourceAsStream(path);
+		byte[] arquivo = IOUtils.toByteArray(in);
+		System.out.println(arquivo.length);
 
-		System.out.println( UUID.randomUUID().toString());
-		System.out.println( UUID.randomUUID().toString());
-		System.out.println( UUID.randomUUID().toString());
 	}
 
 }

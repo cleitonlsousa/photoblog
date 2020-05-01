@@ -15,7 +15,7 @@ import java.util.Map;
 public class CommentControllerAdvisor extends BaseControllerAdvisor {
 
     @ExceptionHandler(CommentNotFoundException.class)
-    public ResponseEntity<Object> handleUserNotFoundException(CommentNotFoundException ex) {
+    public ResponseEntity<Object> commentNotFoundException(CommentNotFoundException ex) {
 
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());

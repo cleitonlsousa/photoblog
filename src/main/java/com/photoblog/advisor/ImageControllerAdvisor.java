@@ -1,8 +1,7 @@
 package com.photoblog.advisor;
 
-import com.photoblog.exception.AccountNFException;
-import com.photoblog.exception.EmailExistsException;
-import com.photoblog.exception.PostNotFoundException;
+import com.photoblog.exception.ImageNotFoundException;
+import com.photoblog.exception.ImageSaveException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -13,10 +12,20 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @ControllerAdvice
-public class AccountControllerAdvisor extends BaseControllerAdvisor {
+public class ImageControllerAdvisor extends BaseControllerAdvisor {
 
-    @ExceptionHandler(AccountNFException.class)
-    public ResponseEntity<Object> accountNFException(AccountNFException ex) {
+    @ExceptionHandler(ImageSaveException.class)
+    public ResponseEntity<Object> photoSaveException(ImageSaveException ex) {
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("message", ex.getMessage());
+
+        return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(ImageNotFoundException.class)
+    public ResponseEntity<Object> imageNotFoundException(ImageNotFoundException ex) {
 
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
@@ -24,16 +33,4 @@ public class AccountControllerAdvisor extends BaseControllerAdvisor {
 
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
-
-    @ExceptionHandler(EmailExistsException.class)
-    public ResponseEntity<Object> emailExistsException(EmailExistsException ex) {
-
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now());
-        body.put("message", ex.getMessage());
-
-        return new ResponseEntity<>(body, HttpStatus.CONFLICT);
-    }
-
-
 }

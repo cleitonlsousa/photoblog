@@ -39,8 +39,7 @@ public class AccountService {
                 accountRequest.getFirstName(),
                 accountRequest.getLastName(),
                 accountRequest.getEmail(),
-                new BCryptPasswordEncoder().encode(accountRequest.getSecret()),
-                UUID.randomUUID().toString()
+                new BCryptPasswordEncoder().encode(accountRequest.getSecret())
         ));
     }
 
