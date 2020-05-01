@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 public class AccountService {
 
@@ -37,7 +39,8 @@ public class AccountService {
                 accountRequest.getFirstName(),
                 accountRequest.getLastName(),
                 accountRequest.getEmail(),
-                new BCryptPasswordEncoder().encode(accountRequest.getSecret())
+                new BCryptPasswordEncoder().encode(accountRequest.getSecret()),
+                UUID.randomUUID().toString()
         ));
     }
 

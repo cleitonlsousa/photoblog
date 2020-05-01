@@ -18,13 +18,17 @@ public class Account {
     private String email;
     private String secret;
 
+    @Column(name="path_id")
+    private String pathId;
+
     public Account() {}
 
-    public Account(String firstName, String lastName, String email, String secret) {
+    public Account(String firstName, String lastName, String email, String secret, String pathId) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.secret = secret;
+        this.pathId = pathId;
     }
 
     public String getFullName(){
@@ -67,5 +71,13 @@ public class Account {
 
     public void setSecret(String secret) {
         this.secret = secret;
+    }
+
+    public String getPathId() {
+        return pathId;
+    }
+
+    public void setPathId(String pathId) {
+        this.pathId = pathId;
     }
 }
