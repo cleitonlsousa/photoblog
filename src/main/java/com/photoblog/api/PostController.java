@@ -3,11 +3,13 @@ package com.photoblog.api;
 import com.photoblog.api.request.PostRequest;
 import com.photoblog.api.response.PostResponse;
 import com.photoblog.service.PostService;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/post")
@@ -27,5 +29,15 @@ public class PostController {
     @GetMapping
     public List<PostResponse> getAll(){
         return postService.getAll();
+    }
+
+    @GetMapping("/find")
+    public List<PostResponse> findBy(@RequestParam Map<String, String> params){
+        return postService.findBy(params);
+    }
+
+    @PutMapping("/{postId}")
+    public void update(@PathVariable Integer postId, @RequestBody PostRequest postRequest, @AuthenticationPrincipal User user){
+        postService.update(postId, postRequest, user.getUsername());
     }
 }

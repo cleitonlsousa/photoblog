@@ -49,20 +49,32 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
 
-        httpSecurity.csrf().disable()
-
-                .authorizeRequests().antMatchers("/authenticate","/account","/swagger-ui.html","/swagger-ui/**"
-                ,"/v3/api-docs/**").permitAll().
-
-                anyRequest().authenticated().and().
-
-                exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).and().sessionManagement()
-
+        httpSecurity
+                .csrf()
+                .disable()
+                .authorizeRequests()
+                .antMatchers(
+                        "/authenticate",
+                                    "/account",
+                                    "/swagger-ui.html",
+                                    "/swagger-ui/**"
+                ).permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(authenticationEntryPoint)
+                .and()
+                .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         httpSecurity.addFilterBefore(requestFilter, UsernamePasswordAuthenticationFilter.class);
 
-        httpSecurity.logout().logoutSuccessUrl("/authenticate").logoutUrl("/logout").permitAll();
+        httpSecurity
+                .logout()
+                .logoutSuccessUrl("/authenticate")
+                .logoutUrl("/logout")
+                .permitAll();
 
     }
 

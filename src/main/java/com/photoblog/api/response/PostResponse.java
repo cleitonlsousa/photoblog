@@ -9,9 +9,9 @@ public class PostResponse {
     private String title;
     private String body;
     private String createdBy;
-    private LocalDateTime createdDate;
+    private LocalDate createdDate;
 
-    public PostResponse(Integer id, String title, String body, String createdBy, LocalDateTime createdDate) {
+    public PostResponse(Integer id, String title, String body, String createdBy, LocalDate createdDate) {
         this.id = id;
         this.title = title;
         this.body = body;
@@ -51,11 +51,11 @@ public class PostResponse {
         this.createdBy = createdBy;
     }
 
-    public LocalDateTime getCreatedDate() {
+    public LocalDate getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(LocalDateTime createdDate) {
+    public void setCreatedDate(LocalDate createdDate) {
         this.createdDate = createdDate;
     }
 }

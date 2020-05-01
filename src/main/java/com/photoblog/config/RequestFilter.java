@@ -20,9 +20,9 @@ import java.io.IOException;
 public class RequestFilter extends OncePerRequestFilter {
 
 
-    private UserDetailsServiceImpl userDetailsServiceImpl;
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
 
-    private JwtToken jwtToken;
+    private final JwtToken jwtToken;
 
     @Autowired
     public RequestFilter(UserDetailsServiceImpl userDetailsServiceImpl, JwtToken jwtToken) {
@@ -31,7 +31,8 @@ public class RequestFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+                                    FilterChain filterChain) throws ServletException, IOException {
 
         final String requestTokenHeader = httpServletRequest.getHeader("Authorization");
 

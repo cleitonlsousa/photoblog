@@ -1,7 +1,7 @@
 package com.photoblog.model;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 public class Post {
@@ -17,11 +17,11 @@ public class Post {
     private Account createdBy;
 
     @Column(name = "created_date")
-    private LocalDateTime createdDate;
+    private LocalDate createdDate;
 
     public Post(){}
 
-    public Post(String title, String body, Account createdBy, LocalDateTime createdDate) {
+    public Post(String title, String body, Account createdBy, LocalDate createdDate) {
         this.title = title;
         this.body = body;
         this.createdBy = createdBy;
@@ -60,11 +60,11 @@ public class Post {
         this.createdBy = createdBy;
     }
 
-    public LocalDateTime getCreatedDate() {
+    public LocalDate getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(LocalDateTime createdDate) {
+    public void setCreatedDate(LocalDate createdDate) {
         this.createdDate = createdDate;
     }
 }
