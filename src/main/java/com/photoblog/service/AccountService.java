@@ -56,4 +56,8 @@ public class AccountService {
         accountRepository.save(account);
     }
 
+    public void delete(String email){
+        accountRepository.delete(findByEmail(email));
+    }
+
 }

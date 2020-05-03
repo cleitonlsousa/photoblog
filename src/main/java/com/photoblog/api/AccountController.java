@@ -5,7 +5,6 @@ import com.photoblog.api.response.AccountResponse;
 import com.photoblog.service.AccountService;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,4 +35,8 @@ public class AccountController {
         accountService.update(accountRequest, user.getUsername());
     }
 
+    @DeleteMapping
+    public void delete(@Parameter(hidden = true) @AuthenticationPrincipal UserDetails user){
+        accountService.delete(user.getUsername());
+    }
 }

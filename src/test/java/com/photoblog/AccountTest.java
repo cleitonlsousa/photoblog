@@ -10,16 +10,23 @@ import com.photoblog.fixture.GenericFixture;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -138,4 +145,33 @@ public class AccountTest {
                 .andExpect(jsonPath("$.email", is("johndoe@email.com")));
     }
 
+    @Test
+    public void delete() throws Exception {
+        JwtRequest jwtRequest = Fixture.from(JwtRequest.class).gimme(GenericFixture.JWT_REQUEST);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.add("Authorization", "Bearer " + authenticate(jwtRequest));
+
+        MockHttpServletRequestBuilder builder =
+                MockMvcRequestBuilders.delete("/account").headers(headers);
+
+        this.mockMvc.perform(builder).andExpect(status().isOk());
+
+    }
+
+    @Test
+    public void findDelete() throws Exception {
+
+        JwtRequest jwtRequest = Fixture.from(JwtRequest.class).gimme(GenericFixture.JWT_REQUEST);
+
+        mockMvc.perform(
+                post("/authenticate")
+                        .content(new ObjectMapper().writeValueAsString(jwtRequest))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+        )
+                .andExpect(status().is4xxClientError());
+
+    }
 }
