@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -24,7 +25,7 @@ public class PostController {
     }
 
     @PostMapping
-    public void save(@Valid @RequestBody PostRequest postRequest,@Parameter(hidden = true) @AuthenticationPrincipal User user){
+    public void save(@Valid @RequestBody PostRequest postRequest,@Parameter(hidden = true) @AuthenticationPrincipal UserDetails user){
         postService.save(postRequest, user.getUsername());
     }
 
@@ -44,12 +45,12 @@ public class PostController {
     }
 
     @PutMapping("/{postId}")
-    public void update(@PathVariable Integer postId, @Valid @RequestBody PostRequest postRequest,@Parameter(hidden = true) @AuthenticationPrincipal User user){
+    public void update(@PathVariable Integer postId, @Valid @RequestBody PostRequest postRequest,@Parameter(hidden = true) @AuthenticationPrincipal UserDetails user){
         postService.update(postId, postRequest, user.getUsername());
     }
 
     @DeleteMapping("/{postId}")
-    public void delete(@PathVariable Integer postId,@Parameter(hidden = true) @AuthenticationPrincipal User user){
+    public void delete(@PathVariable Integer postId,@Parameter(hidden = true) @AuthenticationPrincipal UserDetails user){
         postService.delete(postId, user.getUsername());
     }
 }

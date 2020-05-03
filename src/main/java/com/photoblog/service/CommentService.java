@@ -63,6 +63,10 @@ public class CommentService {
 
     }
 
+    protected void deleteByPost(Integer post) {
+        commentRepository.deleteByPost(post);
+    }
+
     private CommentResponse getCommentResponse(Comment c) {
         return new CommentResponse(
                 c.getId(),

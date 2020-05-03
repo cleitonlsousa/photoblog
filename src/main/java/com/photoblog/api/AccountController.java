@@ -6,6 +6,7 @@ import com.photoblog.service.AccountService;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,17 +22,18 @@ public class AccountController {
     }
 
     @PostMapping
-    public void save(@Valid @RequestBody AccountRequest accountRequest){
+    public void post(@Valid @RequestBody AccountRequest accountRequest){
         accountService.save(accountRequest);
     }
 
     @GetMapping
-    public AccountResponse getByEmail(@AuthenticationPrincipal User user){
+    public AccountResponse get(@AuthenticationPrincipal UserDetails user){
         return accountService.getByEmail(user.getUsername());
     }
 
     @PutMapping
-    public void update(@Valid @RequestBody AccountRequest accountRequest, @Parameter(hidden = true) @AuthenticationPrincipal User user){
+    public void update(@Valid @RequestBody AccountRequest accountRequest, @Parameter(hidden = true) @AuthenticationPrincipal UserDetails user){
         accountService.update(accountRequest, user.getUsername());
     }
+
 }

@@ -5,6 +5,7 @@ import com.photoblog.service.ImageService;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,13 +23,14 @@ public class ImageController {
 
     @PostMapping("/{albumId}")
     public void save(@PathVariable Integer albumId, @RequestParam("file") MultipartFile file,
-                     @Parameter(hidden = true) @AuthenticationPrincipal User user){
+                     @Parameter(hidden = true) @AuthenticationPrincipal UserDetails user){
 
         imageService.save(albumId, file, user.getUsername());
     }
 
     @GetMapping("/album/{albumId}")
     public List<ImageResponse> findByAlbum(@PathVariable Integer albumId){
+
         return imageService.findByAlbum(albumId);
     }
 

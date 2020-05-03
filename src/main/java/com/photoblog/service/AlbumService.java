@@ -11,6 +11,7 @@ import com.photoblog.model.Album;
 import com.photoblog.model.Comment;
 import com.photoblog.respository.AlbumRepository;
 import com.photoblog.respository.CommentRepository;
+import com.photoblog.respository.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,11 +24,13 @@ public class AlbumService {
 
     private final AlbumRepository albumRepository;
     private final AccountService accountService;
+    private final ImageRepository imageRepository;
 
     @Autowired
-    public AlbumService(AlbumRepository albumRepository, AccountService accountService) {
+    public AlbumService(AlbumRepository albumRepository, AccountService accountService, ImageRepository imageRepository) {
         this.albumRepository = albumRepository;
         this.accountService = accountService;
+        this.imageRepository = imageRepository;
     }
 
     public void save(AlbumRequest albumRequest, String userName){
@@ -67,6 +70,8 @@ public class AlbumService {
 
         validateCreatedBY(userName, album);
 
+        imageRepository.deleteByAlbum_Id(id);
+
         albumRepository.delete(album);
 
     }
@@ -84,7 +89,7 @@ public class AlbumService {
             throw new UnauthorizedException();
     }
 
-    protected Album getAlbum(Integer id) {
+    public Album getAlbum(Integer id) {
         return albumRepository.findById(id).orElseThrow(() -> new AlbumNotFoundException(id));
     }
 

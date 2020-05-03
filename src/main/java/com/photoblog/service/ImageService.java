@@ -59,6 +59,10 @@ public class ImageService {
 
     }
 
+    protected void deleteByAlbum(Integer album) {
+        imageRepository.deleteByAlbum_Id(album);
+    }
+
     private ImageResponse getImageResponse(Image image) {
         return new ImageResponse(
                 image.getId(), image.getFileName(), image.getContentType(), decompressBytes(image.getImg()));

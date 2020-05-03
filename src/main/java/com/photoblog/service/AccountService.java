@@ -8,12 +8,12 @@ import com.photoblog.model.Account;
 import com.photoblog.respository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class AccountService {
 
-    private AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
 
     @Autowired
     public AccountService(AccountRepository accountRepository) {
@@ -24,16 +24,16 @@ public class AccountService {
         return this.accountRepository.existsByEmail(email);
     }
 
-    protected Account findByEmail(String email){
+    public Account findByEmail(String email){
         return accountRepository.findByEmail(email).orElseThrow(() -> new AccountNFException(email));
     }
 
-    public void save(AccountRequest accountRequest){
+    public Account save(AccountRequest accountRequest){
 
         if (existsByEmail(accountRequest.getEmail()))
             throw new EmailExistsException(accountRequest.getEmail());
 
-        accountRepository.save(new Account(
+        return accountRepository.save(new Account(
                 accountRequest.getFirstName(),
                 accountRequest.getLastName(),
                 accountRequest.getEmail(),
@@ -55,4 +55,5 @@ public class AccountService {
 
         accountRepository.save(account);
     }
+
 }

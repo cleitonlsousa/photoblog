@@ -24,11 +24,13 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final AccountService accountService;
+    private final CommentService commentService;
 
     @Autowired
-    public PostService(PostRepository postRepository, AccountService accountService) {
+    public PostService(PostRepository postRepository, AccountService accountService, CommentService commentService) {
         this.postRepository = postRepository;
         this.accountService = accountService;
+        this.commentService = commentService;
     }
 
     public void save(PostRequest postRequest, String userName){
@@ -128,6 +130,8 @@ public class PostService {
         Post post = getPost(postId);
 
         validateCreatedBY(userName,post);
+
+        commentService.deleteByPost(postId);
 
         postRepository.delete(post);
 

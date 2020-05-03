@@ -9,6 +9,7 @@ import com.photoblog.service.CommentService;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,7 +26,7 @@ public class AlbumController {
     }
 
     @PostMapping
-    public void save(@Valid @RequestBody AlbumRequest albumRequest,@Parameter(hidden = true) @AuthenticationPrincipal User user){
+    public void save(@Valid @RequestBody AlbumRequest albumRequest,@Parameter(hidden = true) @AuthenticationPrincipal UserDetails user){
         albumService.save(albumRequest, user.getUsername());
     }
 
@@ -40,12 +41,12 @@ public class AlbumController {
     }
 
     @PutMapping("/{id}")
-    public void update(@PathVariable Integer id, @Valid @RequestBody AlbumRequest albumRequest,@Parameter(hidden = true) @AuthenticationPrincipal User user){
+    public void update(@PathVariable Integer id, @Valid @RequestBody AlbumRequest albumRequest,@Parameter(hidden = true) @AuthenticationPrincipal UserDetails user){
         albumService.update(id, albumRequest, user.getUsername());
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id,@Parameter(hidden = true) @AuthenticationPrincipal User user){
+    public void delete(@PathVariable Integer id,@Parameter(hidden = true) @AuthenticationPrincipal UserDetails user){
         albumService.delete(id, user.getUsername());
     }
 }

@@ -42,7 +42,7 @@ public class BaseControllerAdvisor extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(UnauthorizedException.class)
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+   // @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ResponseEntity<Object> unauthorizedException(UnauthorizedException ex) {
 
         Map<String, Object> body = new LinkedHashMap<>();

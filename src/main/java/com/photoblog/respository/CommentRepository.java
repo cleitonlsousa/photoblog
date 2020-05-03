@@ -12,4 +12,5 @@ public interface CommentRepository extends JpaRepository<Comment,Integer> {
 
         List<Comment> findByPost(Integer post);
         Optional<Comment> findByIdAndCreatedBy_Email(Integer id, String email);
+        void deleteByPost(Integer post);
 }
