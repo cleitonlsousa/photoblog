@@ -1,6 +1,7 @@
 package com.photoblog.api.request;
 
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 public class AccountRequest {
 
@@ -42,5 +43,21 @@ public class AccountRequest {
 
     public void setSecret(String secret) {
         this.secret = secret;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AccountRequest that = (AccountRequest) o;
+        return firstName.equals(that.firstName) &&
+                lastName.equals(that.lastName) &&
+                email.equals(that.email) &&
+                secret.equals(that.secret);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, email, secret);
     }
 }

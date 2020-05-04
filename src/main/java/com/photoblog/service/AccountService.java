@@ -28,12 +28,12 @@ public class AccountService {
         return accountRepository.findByEmail(email).orElseThrow(() -> new AccountNFException(email));
     }
 
-    public Account save(AccountRequest accountRequest){
+    public void save(AccountRequest accountRequest){
 
         if (existsByEmail(accountRequest.getEmail()))
             throw new EmailExistsException(accountRequest.getEmail());
 
-        return accountRepository.save(new Account(
+        accountRepository.save(new Account(
                 accountRequest.getFirstName(),
                 accountRequest.getLastName(),
                 accountRequest.getEmail(),

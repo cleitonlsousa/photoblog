@@ -48,7 +48,7 @@ public class AccountTest {
     @Test
     public void create() throws Exception {
 
-        AccountRequest accountRequest = Fixture.from(AccountRequest.class).gimme(GenericFixture.ACCOUNT_REQUEST_CREATE);
+        AccountRequest accountRequest = Fixture.from(AccountRequest.class).gimme(GenericFixture.ACCOUNT_REQUEST_PETER);
 
         mockMvc.perform(
                 post("/account")
@@ -63,7 +63,7 @@ public class AccountTest {
     @Test
     public void createException() throws Exception {
 
-        AccountRequest accountRequest = Fixture.from(AccountRequest.class).gimme(GenericFixture.ACCOUNT_REQUEST_CREATE);
+        AccountRequest accountRequest = Fixture.from(AccountRequest.class).gimme(GenericFixture.ACCOUNT_REQUEST_PETER);
 
         mockMvc.perform(
                 post("/account")
@@ -118,7 +118,7 @@ public class AccountTest {
     @Test
     public void update() throws Exception {
         JwtRequest jwtRequest = Fixture.from(JwtRequest.class).gimme(GenericFixture.JWT_REQUEST);
-        AccountRequest accountRequest = Fixture.from(AccountRequest.class).gimme(GenericFixture.ACCOUNT_REQUEST_UPDATE);
+        AccountRequest accountRequest = Fixture.from(AccountRequest.class).gimme(GenericFixture.ACCOUNT_REQUEST_PETER);
 
         mockMvc.perform(
                 put("/account")

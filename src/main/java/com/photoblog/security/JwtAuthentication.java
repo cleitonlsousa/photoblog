@@ -1,6 +1,7 @@
 package com.photoblog.security;
 
 import com.photoblog.api.response.JwtResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -17,6 +18,7 @@ public class JwtAuthentication {
 
     private final UserDetailsServiceImpl userDetailsService;
 
+    @Autowired
     public JwtAuthentication(AuthenticationManager authenticationManager, JwtUtil jwtToken, UserDetailsServiceImpl userDetailsService) {
         this.authenticationManager = authenticationManager;
         this.jwtToken = jwtToken;

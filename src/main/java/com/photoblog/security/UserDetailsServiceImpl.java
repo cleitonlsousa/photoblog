@@ -2,6 +2,7 @@ package com.photoblog.security;
 
 import com.photoblog.model.Account;
 import com.photoblog.service.AccountService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,6 +13,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final AccountService accountService;
 
+    @Autowired
     public UserDetailsServiceImpl(AccountService accountService) {
         this.accountService = accountService;
     }
